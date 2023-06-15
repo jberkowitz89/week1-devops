@@ -27,3 +27,13 @@ jobs:
       - name: Run tests
         run: |
           python -m pytest -v tests
+      
+      - name: Build coverage report
+        run: |
+          pytest --junitxml=pytest.xml --cov=week1-devops tests/ | tee pytest-coverage.txt
+      
+      - name: Pytest coverage comment
+        uses: MishaKav/pytest-coverage-comment@main
+        with:
+          pytest-coverage-path: ./pytest-coverage.txt
+          junitxml-path: ./pytest.xml
